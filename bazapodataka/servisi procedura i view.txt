@@ -1,0 +1,12 @@
+USE `servisi`;
+DROP procedure IF EXISTS `DodajIzvrseneRadove`;
+DELIMITER $$
+USE `servisi`$$
+CREATE PROCEDURE `DodajIzvrseneRadove` (IN IDServisaParametar int(10), IN BrojSasijeParametar int(17),IN RadoviParametar int(10), IN ImePrezimeKlijentaParametar varchar(40), IN BrRadnihSatiParametar int(10), IN DatumPocetkaRadovaParametar date,DatumKrajaRadovaParametar date, CenaParametar int(15))
+BEGIN
+INSERT INTO `izvrsenirad` (`IDServisa`, `BrojSasije`, `Radovi`, `ImePrezimeKlijenta`, `BrRadnihSati`,`DatumPocetkaRadova`,`DatumKrajaRadova`,`Cena`) VALUES (IDServisaParametar, BrojSasijeParametar, RadoviParametar, ImePrezimeKlijentaParametar, BrRadnihSatiParametar, DatumPocetkaRadovaParametar, DatumKrajaRadovaParametar,CenaParametar);
+END
+$$
+DELIMITER ;
+
+CREATE ALGORITHM = UNDEFINED DEFINER =`root`@`localhost` SQL SECURITY DEFINER VIEW `svipodacioizvrsenimradovima` AS SELECT `izvrsenirad`.`IDServisa`,`izvrsenirad`.`BrojSasije`, `izvrsenirad`.`ImePrezimeKlijenta`,`rad`.`NazivRada`,`izvrsenirad`.`Cena` FROM (`izvrsenirad` inner join `rad` on(`izvrsenirad`.`Radovi` = `rad`.`Sifra`));
